@@ -27,6 +27,6 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: 'app-hub' # Substitua pelo nome exato do projeto no painel da Cloudflare
-          directory: '.' 
+          directory: 'public' 
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: production # Direcionamento explícito para o ambiente de produção
