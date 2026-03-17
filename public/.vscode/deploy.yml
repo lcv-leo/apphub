@@ -1,0 +1,28 @@
+# .github/workflows/deploy.yml
+name: Deploy Automático para Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - production # Trigger de automação ajustado para a branch production
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    
+    steps:
+      - name: Checkout do código-fonte
+        uses: actions/checkout@v4
+
+      - name: Deploy no Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: 'app-hub' # Substitua pelo nome exato do projeto no painel da Cloudflare
+          directory: '.' 
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: production # Direcionamento explícito para o ambiente de produção
