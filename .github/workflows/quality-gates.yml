@@ -27,6 +27,9 @@ jobs:
       - name: Validar pinning SHA das GitHub Actions
         run: node .github/scripts/audit-actions-pinning.mjs
 
+      - name: Validar convenção de branches (GitHub main / Cloudflare production)
+        run: node .github/scripts/audit-branch-conventions.mjs
+
       - name: Executar auditoria estática do Hub
         run: node .github/scripts/audit-static.mjs
 
