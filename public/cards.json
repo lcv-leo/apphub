@@ -1,0 +1,55 @@
+{
+  "open": [
+    {
+      "name": "Mapa Astral",
+      "description": "Cálculo de mapas baseados no Zodíaco Tropical e no Astronômico Realista.",
+      "url": "https://mapa-astral.lcv.app.br",
+      "icon": "✨",
+      "badge": "Abrir App"
+    },
+    {
+      "name": "Oráculo Financeiro",
+      "description": "Consolidação e projeção de métricas financeiras.",
+      "url": "https://oraculo-financeiro.lcv.app.br",
+      "icon": "💰",
+      "badge": "Abrir App"
+    },
+    {
+      "name": "Calculadora Itaú",
+      "description": "Simulador para operações financeiras Itaú.",
+      "url": "https://calculadora-itau.lcv.app.br/",
+      "icon": "🧮",
+      "badge": "Abrir App"
+    }
+  ],
+  "restricted": [
+    {
+      "name": "Gerador de IDs & MTA-STS",
+      "description": "Ferramenta administrativa para geração e gestão de identificadores e políticas.",
+      "url": "https://gerador-ids.lcv.app.br",
+      "icon": "🔐",
+      "badge": "Autenticar"
+    },
+    {
+      "name": "Leitor TLS-RPT",
+      "description": "Leitura e consolidação de relatórios TLS para análise operacional.",
+      "url": "https://tls-rpt.lcv.app.br",
+      "icon": "📄",
+      "badge": "Autenticar"
+    },
+    {
+      "name": "MainSite Admin",
+      "description": "Painel de gestão do site principal.",
+      "url": "https://admin-site.lcv.rio.br",
+      "icon": "🏢",
+      "badge": "Autenticar"
+    },
+    {
+      "name": "Astrólogo Admin",
+      "description": "Painel administrativo do ecossistema Astrólogo.",
+      "url": "https://admin-astrologo.lcv.app.br",
+      "icon": "🌌",
+      "badge": "Autenticar"
+    }
+  ]
+}

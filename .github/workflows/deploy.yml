@@ -4,7 +4,7 @@ name: Deploy Automático para Cloudflare Pages
 on:
   push:
     branches:
-      - production # Trigger de automação ajustado para a branch production
+      - main # Repositório GitHub: branch principal
 
 # 🛡️ Hotfix v3.01.01: Força os runners do GitHub a usarem a arquitetura moderna (Node 24)
 env:
@@ -19,14 +19,14 @@ jobs:
     
     steps:
       - name: Checkout do código-fonte
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Deploy no Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/pages-action@f0a1cd58cd66095dee69bfa18fa5efd1dde93bca # v1.5.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: 'app-hub' # Substitua pelo nome exato do projeto no painel da Cloudflare
           directory: 'public' 
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: production # Direcionamento explícito para o ambiente de produção
+          branch: production # Cloudflare Pages: branch/ambiente de produção
