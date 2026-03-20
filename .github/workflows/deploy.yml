@@ -22,11 +22,9 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Deploy no Cloudflare Pages
-        uses: cloudflare/pages-action@f0a1cd58cd66095dee69bfa18fa5efd1dde93bca # v1.5.0
+        uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3.14.1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 'app-hub' # Substitua pelo nome exato do projeto no painel da Cloudflare
-          directory: 'public' 
+          command: pages deploy public --project-name=app-hub --branch=production
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: production # Cloudflare Pages: branch/ambiente de produção

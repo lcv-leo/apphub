@@ -26,7 +26,10 @@ function extractListBlock(content, blockHeaderRegex) {
 }
 
 function containsCloudflareProduction(content) {
-    return /branch:\s*production\b/.test(content);
+    // Aceita tanto o formato antigo (pages-action: `branch: production`)
+    // quanto o formato actual (wrangler-action: `--branch=production`)
+    return /branch:\s*production\b/.test(content) ||
+           /--branch=production\b/.test(content);
 }
 
 async function main() {
