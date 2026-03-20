@@ -6,12 +6,3 @@
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'none'; upgrade-insecure-requests
-
-/app.js
-  Cache-Control: public, max-age=300, must-revalidate
-
-/styles.css
-  Cache-Control: public, max-age=300, must-revalidate
-
-/
-  Cache-Control: public, max-age=600, must-revalidate
