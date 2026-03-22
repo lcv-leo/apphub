@@ -1,22 +1,66 @@
 # .github/workflows/deploy.yml
-name: Deploy Automático para Cloudflare Pages
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
-      - main # Repositório GitHub: branch principal
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      baseline_refresh:
+        description: Motivo da atualização do baseline estrutural
+        required: true
+        type: string
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
   WRANGLER_VERSION: "latest"
 
 jobs:
-  build-and-deploy:
+  # ── Quality Gates ──────────────────────────────────────────────
+  quality-gates:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: latest
+          check-latest: true
+
+      - name: Validar pinning SHA das GitHub Actions
+        run: node .github/scripts/audit-actions-pinning.mjs
+
+      - name: Validar convenção de branches (GitHub main / Cloudflare production)
+        run: node .github/scripts/audit-branch-conventions.mjs
+
+      - name: Executar auditoria estática do Hub
+        run: node .github/scripts/audit-static.mjs
+
+      - name: Checar disponibilidade de links externos (não bloqueante)
+        run: node .github/scripts/audit-external-links.mjs --timeout=4500 --concurrency=3
+
+      - name: Validar snapshot estrutural do catálogo
+        run: node .github/scripts/audit-structure-snapshot.mjs
+
+  # ── Deploy ─────────────────────────────────────────────────────
+  deploy:
+    if: github.event_name == 'push'
+    needs: quality-gates
     runs-on: ubuntu-latest
     permissions:
       contents: read
       deployments: write
-    
+
     steps:
       - name: Checkout do código-fonte
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -26,3 +70,32 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+  # ── Baseline Refresh (manual) ──────────────────────────────────
+  baseline-refresh:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: latest
+          check-latest: true
+
+      - name: Atualizar baseline estrutural
+        run: node .github/scripts/audit-structure-snapshot.mjs --update
+
+      - name: Validar baseline atualizado
+        run: node .github/scripts/audit-structure-snapshot.mjs
+
+      - name: Commit automático do baseline
+        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+        with:
+          commit_message: "chore(ci): refresh estrutura baseline [manual] — ${{ github.event.inputs.baseline_refresh }}"
+          file_pattern: .github/baselines/hub-structure.snapshot.json
