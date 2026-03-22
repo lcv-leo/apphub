@@ -1,5 +1,5 @@
 {
-  "open": [
+  "cards": [
     {
       "name": "Divagações Filosóficas",
       "description": "Publicações sobre temas científico-religio-filosóficos",
@@ -27,36 +27,6 @@
       "url": "https://calculadora-itau.lcv.app.br/",
       "icon": "🧮",
       "badge": "Abrir App"
-    }
-  ],
-  "restricted": [
-    {
-      "name": "MTA-STS ADMIN",
-      "description": "Ferramenta administrativa para geração e gestão de identificadores e políticas.",
-      "url": "https://mtasts-admin.lcv.app.br",
-      "icon": "🔐",
-      "badge": "Autenticar"
-    },
-    {
-      "name": "Leitor TLS-RPT",
-      "description": "Leitura e consolidação de relatórios TLS para análise operacional.",
-      "url": "https://tls-rpt.lcv.app.br",
-      "icon": "📄",
-      "badge": "Autenticar"
-    },
-    {
-      "name": "MainSite Admin",
-      "description": "Painel de gestão do site principal.",
-      "url": "https://admin-site.lcv.rio.br",
-      "icon": "🏢",
-      "badge": "Autenticar"
-    },
-    {
-      "name": "Astrólogo Admin",
-      "description": "Painel administrativo do ecossistema Astrólogo.",
-      "url": "https://admin-astrologo.lcv.app.br",
-      "icon": "🌌",
-      "badge": "Autenticar"
     }
   ]
 }

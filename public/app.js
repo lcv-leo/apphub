@@ -1,5 +1,5 @@
 const SAFE_PROTOCOLS = new Set(["https:"]);
-const APP_VERSION = "v02.15.0";
+const APP_VERSION = "v03.0.0";
 
 /**
  * @param {string} url
@@ -35,7 +35,7 @@ function isValidCard(value) {
 }
 
 /**
- * @returns {Promise<{open: Array<{name: string, description: string, url: string, icon: string, badge: string}>, restricted: Array<{name: string, description: string, url: string, icon: string, badge: string}>}>}
+ * @returns {Promise<Array<{name: string, description: string, url: string, icon: string, badge: string}>>}
  */
 async function loadCards() {
     const response = await fetch("./cards.json", { cache: "no-store" });
@@ -44,25 +44,23 @@ async function loadCards() {
     }
 
     const json = await response.json();
-    const open = Array.isArray(json?.open) ? json.open.filter(isValidCard) : [];
-    const restricted = Array.isArray(json?.restricted) ? json.restricted.filter(isValidCard) : [];
+    const cards = Array.isArray(json?.cards) ? json.cards.filter(isValidCard) : [];
 
-    return { open, restricted };
+    return cards;
 }
 
 /**
  * @param {{name: string, description: string, url: string, icon: string, badge: string}} app
- * @param {"open" | "restricted"} level
  * @returns {HTMLAnchorElement}
  */
-function createCard(app, level) {
+function createCard(app) {
     const card = document.createElement("a");
     card.className = "card md3-surface glass";
-    card.dataset.level = level;
+    card.dataset.level = "open";
     card.href = app.url;
     card.target = "_blank";
     card.rel = "noopener noreferrer";
-    card.setAttribute("aria-label", `${app.name} (${level === "open" ? "acesso liberado" : "acesso restrito"})`);
+    card.setAttribute("aria-label", `${app.name} (acesso liberado)`);
 
     const icon = document.createElement("div");
     icon.className = "card-icon";
@@ -85,44 +83,32 @@ function createCard(app, level) {
 }
 
 /**
- * @param {{open: Array<{name: string, description: string, url: string, icon: string, badge: string}>, restricted: Array<{name: string, description: string, url: string, icon: string, badge: string}>}} sections
+ * @param {Array<{name: string, description: string, url: string, icon: string, badge: string}>} cards
  */
-function mountCards(sections) {
-    const openRoot = document.getElementById("cards-open");
-    const restrictedRoot = document.getElementById("cards-restricted");
+function mountCards(cards) {
+    const root = document.getElementById("cards-open");
 
-    if (!openRoot || !restrictedRoot) {
+    if (!root) {
         return;
     }
 
-    const openFragment = document.createDocumentFragment();
-    const restrictedFragment = document.createDocumentFragment();
+    const fragment = document.createDocumentFragment();
 
-    for (const app of sections.open) {
+    for (const app of cards) {
         if (!isSafeUrl(app.url)) {
             console.warn("URL insegura bloqueada:", app.url);
             continue;
         }
 
-        openFragment.appendChild(createCard(app, "open"));
+        fragment.appendChild(createCard(app));
     }
 
-    for (const app of sections.restricted) {
-        if (!isSafeUrl(app.url)) {
-            console.warn("URL insegura bloqueada:", app.url);
-            continue;
-        }
-
-        restrictedFragment.appendChild(createCard(app, "restricted"));
-    }
-
-    if (openFragment.childNodes.length === 0 && restrictedFragment.childNodes.length === 0) {
-        openRoot.textContent = "Nenhum card válido encontrado em cards.json.";
+    if (fragment.childNodes.length === 0) {
+        root.textContent = "Nenhum card válido encontrado em cards.json.";
         return;
     }
 
-    openRoot.appendChild(openFragment);
-    restrictedRoot.appendChild(restrictedFragment);
+    root.appendChild(fragment);
 }
 
 function setYear() {
@@ -144,14 +130,14 @@ async function init() {
     setAppVersion();
 
     try {
-        const sections = await loadCards();
-        mountCards(sections);
+        const cards = await loadCards();
+        mountCards(cards);
     } catch (error) {
         console.error("Erro ao inicializar catálogo de cards:", error);
 
-        const openRoot = document.getElementById("cards-open");
-        if (openRoot) {
-            openRoot.textContent = "Falha ao carregar o catálogo de apps.";
+        const root = document.getElementById("cards-open");
+        if (root) {
+            root.textContent = "Falha ao carregar o catálogo de apps.";
         }
     }
 }

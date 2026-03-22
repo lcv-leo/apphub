@@ -184,9 +184,7 @@ iframe {
     background: #10b981;
 }
 
-.status-dot.restricted {
-    background: #f43f5e;
-}
+
 
 @keyframes pulse {
     0% {
@@ -283,10 +281,7 @@ iframe {
     color: #047857;
 }
 
-.card[data-level="restricted"] .card-badge {
-    background: rgba(244, 63, 94, 0.14);
-    color: #be123c;
-}
+
 
 .app-footer {
     width: min(1120px, 100%);
