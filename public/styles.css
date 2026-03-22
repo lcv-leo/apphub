@@ -1,13 +1,10 @@
 :root {
     --md-sys-color-primary: #8ab4f8;
-    --md-sys-color-on-primary: #ffffff;
-    --md-sys-color-secondary: #c58af9;
     --md-sys-color-on-surface: #1f2937;
     --md-sys-color-surface: rgba(246, 249, 255, 0.72);
     --md-sys-color-surface-container: rgba(255, 255, 255, 0.84);
     --md-sys-color-outline: rgba(138, 180, 248, 0.38);
     --md-sys-color-shadow: rgba(24, 32, 56, 0.2);
-    --radius-lg: 1.5rem;
     --radius-md: 1rem;
     --bar-padding-y: 0.8rem;
     --bar-padding-x: 1rem;
@@ -39,15 +36,6 @@ body {
     padding: clamp(1rem, 3vw, 2rem);
     position: relative;
     overflow-x: hidden;
-}
-
-img,
-svg,
-video,
-canvas,
-iframe {
-    max-width: 100%;
-    height: auto;
 }
 
 .skip-link {
@@ -148,12 +136,6 @@ iframe {
     overflow-wrap: anywhere;
 }
 
-.hero p {
-    margin: 0.8rem 0 0;
-    max-width: 68ch;
-    opacity: 0.88;
-}
-
 .catalog {
     display: grid;
     gap: 0.8rem;
@@ -183,7 +165,6 @@ iframe {
 .status-dot.open {
     background: #10b981;
 }
-
 
 
 @keyframes pulse {
@@ -282,7 +263,6 @@ iframe {
 }
 
 
-
 .app-footer {
     width: min(1120px, 100%);
     margin: 1.2rem auto 0;
@@ -321,17 +301,6 @@ iframe {
     margin: 0;
 }
 
-.noscript-fallback ul {
-    margin: 0.25rem 0 0;
-    padding-left: 1rem;
-    display: grid;
-    gap: 0.2rem;
-}
-
-.noscript-fallback a {
-    color: var(--md-sys-color-primary);
-    font-weight: 600;
-}
 
 @media (prefers-reduced-motion: reduce) {
     *,
