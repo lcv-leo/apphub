@@ -1,5 +1,14 @@
 # Changelog — AppHub
 
+## [v03.03.01] — 2026-03-24
+### Alterado
+- `public/_headers` atualizado para política CSP estável em runtime (`script-src` com `'unsafe-inline'`), eliminando dependência de hash inline volátil.
+- Workflow de deploy ajustado para compatibilidade com Wrangler 4.77+ (`pages deploy` sem flags legadas `--functions` e `--config`).
+
+### Corrigido
+- Falha de deploy no GitHub Actions causada por flags removidas no Wrangler 4.77+.
+- Bloqueio de script inline por CSP após deploy.
+
 ## [v03.03.00] — 2026-03-24
 ### Alterado
 - Arquitetura de leitura migrada para API local `GET /api/config` via Cloudflare Pages Functions.

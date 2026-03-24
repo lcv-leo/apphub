@@ -1,9 +1,9 @@
 // Módulo: apphub/public/app.js
-// Versão: v03.03.00
+// Versão: v03.03.01
 // Descrição: Catálogo público de apps — carrega cards via API local (/api/config) com leitura direta no bigdata_db e fallback local.
 
 const SAFE_PROTOCOLS = new Set(["https:"]);
-const APP_VERSION = 'APP v03.03.00';
+const APP_VERSION = 'APP v03.03.01';
 const CONFIG_ENDPOINT = '/api/config';
 
 /**
