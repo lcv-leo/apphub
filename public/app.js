@@ -1,11 +1,10 @@
 // Módulo: apphub/public/app.js
-// Versão: v03.02.00
-// Descrição: Catálogo público de apps — carrega cards de admin-app (bigdata_db) com fallback para cards.json local.
+// Versão: v03.03.00
+// Descrição: Catálogo público de apps — carrega cards via API local (/api/config) com leitura direta no bigdata_db e fallback local.
 
 const SAFE_PROTOCOLS = new Set(["https:"]);
-const APP_VERSION = 'APP v03.02.00';
-const ADMIN_BASE_URL = 'https://admin.lcv.app.br';
-const CONFIG_ENDPOINT = `${ADMIN_BASE_URL}/api/apphub/config`;
+const APP_VERSION = 'APP v03.03.00';
+const CONFIG_ENDPOINT = '/api/config';
 
 /**
  * @param {string} url
@@ -41,23 +40,23 @@ function isValidCard(value) {
 }
 
 /**
- * Tenta carregar cards do endpoint centralizado (admin-app)
+ * Tenta carregar cards do endpoint local (Pages Function + D1)
  * @returns {Promise<Array<{name: string, description: string, url: string, icon: string, badge: string}>>}
  */
 async function loadCardsFromApi() {
     const response = await fetch(CONFIG_ENDPOINT, { cache: "no-store" });
     if (!response.ok) {
-        throw new Error(`Falha ao carregar config de admin-app: HTTP ${response.status}`);
+        throw new Error(`Falha ao carregar config local: HTTP ${response.status}`);
     }
 
     const payload = await response.json();
     const cards = Array.isArray(payload?.cards) ? payload.cards.filter(isValidCard) : [];
 
     if (cards.length === 0) {
-        throw new Error('Admin-app retornou array de cards vazio.');
+        throw new Error('API local retornou array de cards vazio.');
     }
 
-    console.log(`Cards carregados de admin-app (${cards.length} cards)`);
+    console.log(`Cards carregados da API local (${cards.length} cards)`);
     return cards;
 }
 
@@ -78,12 +77,12 @@ async function loadCardsFromLocal() {
         throw new Error('Local cards.json vazio ou inválido.');
     }
 
-    console.warn('Aviso: usando cards.json local (admin-app indisponível)');
+    console.warn('Aviso: usando cards.json local (API local indisponível)');
     return cards;
 }
 
 /**
- * Carrega cards com fallback: admin-app → local
+ * Carrega cards com fallback: API local → local
  * @returns {Promise<Array<{name: string, description: string, url: string, icon: string, badge: string}>>}
  */
 async function loadCards() {

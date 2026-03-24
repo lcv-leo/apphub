@@ -1,0 +1,12 @@
+{
+  "name": "apphub",
+  "compatibility_date": "2026-03-24",
+  "pages_build_output_dir": "public",
+  "d1_databases": [
+    {
+      "binding": "BIGDATA_DB",
+      "database_name": "bigdata_db",
+      "database_id": "6a71b62e-8ab9-45e6-a867-c0d4e6a56269"
+    }
+  ]
+}
