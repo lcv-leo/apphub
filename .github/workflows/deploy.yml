@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6.0.2
 
-      - run: npx wrangler@${WRANGLER_VERSION} pages deploy public --project-name=apphub --branch=production --config wrangler.json
+      - run: npx wrangler@${WRANGLER_VERSION} pages deploy public --project-name=apphub --branch=production
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
