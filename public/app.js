@@ -1,9 +1,11 @@
 // Módulo: apphub/public/app.js
-// Versão: v03.01.00
-// Descrição: Catálogo público de apps — carrega cards.json e renderiza cards com validação.
+// Versão: v03.02.00
+// Descrição: Catálogo público de apps — carrega cards de admin-app (bigdata_db) com fallback para cards.json local.
 
 const SAFE_PROTOCOLS = new Set(["https:"]);
-const APP_VERSION = 'APP v03.01.00';
+const APP_VERSION = 'APP v03.02.00';
+const ADMIN_BASE_URL = 'https://admin.lcv.app.br';
+const CONFIG_ENDPOINT = `${ADMIN_BASE_URL}/api/apphub/config`;
 
 /**
  * @param {string} url
@@ -39,18 +41,63 @@ function isValidCard(value) {
 }
 
 /**
+ * Tenta carregar cards do endpoint centralizado (admin-app)
  * @returns {Promise<Array<{name: string, description: string, url: string, icon: string, badge: string}>>}
  */
-async function loadCards() {
+async function loadCardsFromApi() {
+    const response = await fetch(CONFIG_ENDPOINT, { cache: "no-store" });
+    if (!response.ok) {
+        throw new Error(`Falha ao carregar config de admin-app: HTTP ${response.status}`);
+    }
+
+    const payload = await response.json();
+    const cards = Array.isArray(payload?.cards) ? payload.cards.filter(isValidCard) : [];
+
+    if (cards.length === 0) {
+        throw new Error('Admin-app retornou array de cards vazio.');
+    }
+
+    console.log(`Cards carregados de admin-app (${cards.length} cards)`);
+    return cards;
+}
+
+/**
+ * Fallback: carrega cards do arquivo local
+ * @returns {Promise<Array<{name: string, description: string, url: string, icon: string, badge: string}>>}
+ */
+async function loadCardsFromLocal() {
     const response = await fetch("./cards.json", { cache: "no-store" });
     if (!response.ok) {
-        throw new Error(`Falha ao carregar cards.json: HTTP ${response.status}`);
+        throw new Error(`Falha ao carregar cards.json local: HTTP ${response.status}`);
     }
 
     const json = await response.json();
     const cards = Array.isArray(json?.cards) ? json.cards.filter(isValidCard) : [];
 
+    if (cards.length === 0) {
+        throw new Error('Local cards.json vazio ou inválido.');
+    }
+
+    console.warn('Aviso: usando cards.json local (admin-app indisponível)');
     return cards;
+}
+
+/**
+ * Carrega cards com fallback: admin-app → local
+ * @returns {Promise<Array<{name: string, description: string, url: string, icon: string, badge: string}>>}
+ */
+async function loadCards() {
+    try {
+        return await loadCardsFromApi();
+    } catch (apiError) {
+        console.warn('Fallback para cards.json local:', apiError.message);
+        try {
+            return await loadCardsFromLocal();
+        } catch (localError) {
+            throw new Error(`Ambas fontes falharam: API (${apiError.message}), Local (${localError.message})`);
+        }
+    }
+}
 }
 
 /**
