@@ -1,6 +1,7 @@
 /* ======================================================================
    AppHub — tiptap.dev Design System (Google Blue)
    WCAG 2.1 AA + eMAG compliant
+   Migrado de public/styles.css → src/App.css (preservação 1:1)
    ====================================================================== */
 
 :root {

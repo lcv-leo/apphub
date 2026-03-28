@@ -1,5 +1,5 @@
-# Módulo: .github/dependabot.yml (v2.0.0)
-# Nota: apphub é um app estático (HTML/CSS/JS), sem dependências NPM.
+# Módulo: .github/dependabot.yml (v3.0.0)
+# Nota: apphub migrado para React 19 + TypeScript + Vite — dependências NPM ativas.
 version: 2
 updates:
   # ---------------------------------------------------------
@@ -22,3 +22,24 @@ updates:
       prefix: "ci"
       include: "scope"
     open-pull-requests-limit: 5
+
+  # ---------------------------------------------------------
+  # DEPENDÊNCIAS: NPM (React, Vite, TypeScript)
+  # ---------------------------------------------------------
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    labels:
+      - "dependencies"
+      - "npm"
+      - "security"
+    assignees:
+      - "lcv-leo"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    open-pull-requests-limit: 10

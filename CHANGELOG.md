@@ -1,5 +1,20 @@
 # Changelog — AppHub
 
+## [v04.00.00] — 2026-03-28
+### Migração Arquitetural Completa (React 19 + TypeScript + Vite)
+- **Stack**: migrado de HTML estático + JS vanilla + CSS para **React 19 + TypeScript 5.9 + Vite 8**.
+- **Componentização**: `public/app.js` + `public/index.html` decompostos em `src/App.tsx` (componente React) + `src/types.ts` (interfaces tipadas) + `src/main.tsx` (entry point).
+- **CSS preservado**: design system tiptap.dev (Google Blue) portado 1:1 de `public/styles.css` para `src/App.css`.
+- **Build**: saída em `dist/` (Vite) — 194KB JS (61KB gzip), 6.5KB CSS (2KB gzip), 16 módulos, <1s.
+- **Deploy**: `deploy.yml` atualizado com steps `setup-node`, `npm ci`, `npm run build`.
+### Removido
+- `public/app.js`, `public/index.html`, `public/styles.css` (substituídos por componentes React).
+### Preservado
+- `functions/api/config.js` — backend Pages Function (permanece vanilla JS).
+- `public/cards.json` — fallback de dados.
+- `public/favicon.svg` — asset estático.
+- `public/_headers` — CSP policy (app público).
+
 ## [v03.04.00] — 2026-03-26
 ### UI/UX Redesign — tiptap.dev Style (Google Blue)
 - **Design Tokens**: paleta primária de `#8ab4f8` (light blue) para `#1a73e8` (Google Blue). Background `#f5f4f4` (warm gray). Texto `#0d0d0d`. Bordas warm `rgba(0,0,0,0.08)`.
