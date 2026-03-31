@@ -9,6 +9,8 @@
 
 import { useState, useEffect } from 'react'
 import type { CardData } from './types.ts'
+import { ComplianceBanner } from './components/ComplianceBanner'
+import { LicencasModule } from './modules/compliance/LicencasModule'
 
 const APP_VERSION = 'APP v04.00.03'
 const CONFIG_ENDPOINT = '/api/config'
@@ -101,6 +103,7 @@ function Card({ card }: { card: CardData }) {
 export default function App() {
   const [cards, setCards] = useState<CardData[]>([])
   const [error, setError] = useState<string | null>(null)
+  const [showLicenses, setShowLicenses] = useState(false)
 
   useEffect(() => {
     loadCards()
@@ -118,6 +121,7 @@ export default function App() {
       <div className="bg-orb orb-2" aria-hidden="true" />
       <div className="bg-orb orb-3" aria-hidden="true" />
 
+      {!showLicenses ? (
       <main className="layout" id="app" aria-live="polite">
         <header className="hero md3-surface">
           <h1>Portal de Apps</h1>
@@ -145,11 +149,22 @@ export default function App() {
           </section>
         </noscript>
       </main>
+      ) : (
+        <main className="layout" id="app" aria-live="polite" style={{ marginTop: '30px' }}>
+          <LicencasModule />
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <button onClick={() => setShowLicenses(false)} style={{ padding: '8px 16px', background: '#e0e0e0', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+              Voltar ao Início
+            </button>
+          </div>
+        </main>
+      )}
 
       <footer className="app-footer md3-surface">
         <p>&copy; {new Date().getFullYear()} Portal de Apps | Leonardo Cardozo Vargas</p>
         <p className="app-version" title="Versionamento Semântico">{APP_VERSION}</p>
       </footer>
+      <ComplianceBanner onViewLicenses={() => setShowLicenses(true)} />
     </>
   )
 }
