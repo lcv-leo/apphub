@@ -10,7 +10,7 @@
 import { useState, useEffect } from 'react'
 import type { CardData } from './types.ts'
 
-const APP_VERSION = 'APP v04.00.02'
+const APP_VERSION = 'APP v04.00.03'
 const CONFIG_ENDPOINT = '/api/config'
 const SAFE_PROTOCOLS = new Set(['https:'])
 
