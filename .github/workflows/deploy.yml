@@ -3,10 +3,6 @@ name: Deploy
 on:
   push:
     branches: [main]
-  pull_request:
-    types: [closed]
-    branches: [main]
-
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
   WRANGLER_VERSION: "latest"
@@ -17,7 +13,7 @@ concurrency:
 
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true || github.event_name == 'push'
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: read
