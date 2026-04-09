@@ -12,7 +12,7 @@ import type { CardData } from './types.ts'
 import { ComplianceBanner } from './components/ComplianceBanner'
 import { LicencasModule } from './modules/compliance/LicencasModule'
 
-const APP_VERSION = 'APP v04.00.06'
+const APP_VERSION = 'APP v04.00.07'
 const CONFIG_ENDPOINT = '/api/config'
 const SAFE_PROTOCOLS = new Set(['https:'])
 
@@ -83,20 +83,26 @@ async function loadCards(): Promise<CardData[]> {
 /* ── Componentes ── */
 
 function Card({ card }: { card: CardData }) {
+  const handleClick = () => window.open(card.url, '_blank', 'noopener,noreferrer')
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick() }
+  }
   return (
-    <a
+    <div
       className="card md3-surface"
       data-level="open"
-      href={card.url}
-      target="_blank"
-      rel="noopener noreferrer"
+      role="link"
+      tabIndex={0}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
       aria-label={`${card.name} (acesso liberado)`}
+      style={{ cursor: 'pointer' }}
     >
       <div className="card-icon">{card.icon}</div>
       <h3 className="card-title">{card.name}</h3>
       <p className="card-desc">{card.description}</p>
       <span className="card-badge">{card.badge}</span>
-    </a>
+    </div>
   )
 }
 

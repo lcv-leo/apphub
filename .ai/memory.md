@@ -1,5 +1,14 @@
 # AI Memory Log - apphub
 
+## 2026-04-08 — Restauração: Card URL Status Bar Suppression
+### Escopo
+Restaurada funcionalidade que impede exibição da URL na barra de status do browser ao hover nos cards.
+### Feito
+- Componente `Card` migrado de `<a href>` para `<div role="link">` com `onClick` → `window.open()`.
+- Acessibilidade mantida: `tabIndex={0}`, `onKeyDown` (Enter/Space), `role="link"`, `aria-label`.
+### Versão
+- APP v04.00.06 → APP v04.00.07
+
 ## 2026-04-08 — GitHub Actions Purge & Dependabot Standardization
 ### Escopo
 Auditoria completa de CI/CD para eliminação de "ghost runs" em toda a rede de repositórios do workspace, juntamente com a universalização da configuração do Dependabot ajustada às necessidades de empacotamento locais para mitigar tráfego e limites no API.
