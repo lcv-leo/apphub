@@ -9,6 +9,19 @@
 ## 🧠 MEMÓRIA DE CONTEXTO ISOLADO (APPHUB)
 # AI Memory Log - apphub
 
+## 2026-04-08 — Restauração: Card URL Status Bar Suppression
+### Escopo
+Restaurada funcionalidade que impede exibição da URL na barra de status do browser ao hover nos cards.
+### Feito
+- Componente `Card` migrado de `<a href>` para `<div role="link">` com `onClick` → `window.open()`.
+- Acessibilidade mantida: `tabIndex={0}`, `onKeyDown` (Enter/Space), `role="link"`, `aria-label`.
+### Versão
+- APP v04.00.06 → APP v04.00.07
+
+## 2026-04-08 — GitHub Actions Purge & Dependabot Standardization
+### Escopo
+Auditoria completa de CI/CD para eliminação de "ghost runs" em toda a rede de repositórios do workspace, juntamente com a universalização da configuração do Dependabot ajustada às necessidades de empacotamento locais para mitigar tráfego e limites no API.
+
 
 ## 2026-04-03 — Cloudflare Paid Scale Integration
 ### Escopo
@@ -62,14 +75,5 @@ Implementação de bloqueio em Edge para impedir a exposição pública de rotea
 - `adminapps`: middleware deployment, versioning handled internally
 
 
-
-## 🤖 Claude Code — Memória Sincronizada (2026-04-09)
-
-A memória persistente do **Claude Code** está em:
-`C:\Users\leona\.claude\projects\c--Users-leona-lcv-workspace\memory\`
-
-Arquivos: `MEMORY.md` (índice) · `project_workspace.md` · `version_control.md` · `infra_directives.md` · `app_memories_ref.md` · `ai_agents_files.md`
-
-**Diretiva:** Ao atualizar esta memória, atualizar também os arquivos correspondentes da memória do Claude Code para manter paridade entre Gemini, Copilot e Claude Code.
 
 > **DIRETIVA DE SEGURANÇA:** Ao sugerir código ou responder perguntas, leia rigorosamente o contexto e as memórias históricas acima para não divergir das decisões já tomadas pelo outro agente.
