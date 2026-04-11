@@ -7,6 +7,12 @@
 
 
 ## 🧠 MEMÓRIA DE CONTEXTO ISOLADO (APPHUB)
+## 2026-04-10 — Biome 2.x + Vitest (v04.00.08)
+- Biome 2.x adicionado (lint + format — antes sem qualquer lint/format)
+- Vitest 4.1.4 adicionado (antes sem framework de testes)
+- vite 8.0.7 → 8.0.8
+- Dependabot groups: @vitest/* e @biomejs/* adicionados
+
 # AI Memory Log - apphub
 
 ## 2026-04-08 — Restauração: Card URL Status Bar Suppression
