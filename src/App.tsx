@@ -12,7 +12,7 @@ import type { CardData } from './types.ts'
 import { ComplianceBanner } from './components/ComplianceBanner'
 import { LicencasModule } from './modules/compliance/LicencasModule'
 
-const APP_VERSION = 'APP v04.00.07'
+const APP_VERSION = 'APP v04.00.08'
 const CONFIG_ENDPOINT = '/api/config'
 const SAFE_PROTOCOLS = new Set(['https:'])
 

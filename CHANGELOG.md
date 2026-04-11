@@ -1,5 +1,14 @@
 # Changelog — AppHub
 
+## [v04.00.08] - 2026-04-10
+### Adicionado
+- **Biome 2.x**: lint + format com organizeImports
+- **Vitest 4.1.4**: framework de testes adicionado (antes ausente)
+
+### Alterado
+- **vite**: 8.0.7 → 8.0.8
+- **Dependabot groups**: @vitest/* e @biomejs/* adicionados
+
 ## [v04.00.07] - 2026-04-08
 ### Corrigido
 - **Card URL Status Bar**: Restaurada funcionalidade que impede exibição da URL na barra de status do browser ao passar o mouse sobre os cards. Componente `Card` migrado de `<a href>` para `<div role="link">` com `onClick` via `window.open()`, mantendo acessibilidade (tabIndex, onKeyDown Enter/Space).
