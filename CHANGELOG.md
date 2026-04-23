@@ -1,5 +1,12 @@
 # Changelog — AppHub
 
+## [Security Publication Hardening] - 2026-04-23
+### Segurança
+- Memórias e contexto de agentes passaram a ser locais apenas: `.ai/`, `.aiexclude`, `.copilotignore` e `.github/copilot-instructions.md` foram adicionados ao ignore e removidos do índice Git com `git rm --cached`, preservando os arquivos no disco local.
+- Regras de publicação foram endurecidas para impedir envio de `.env*`, `.dev.vars*`, `.wrangler/`, `.tmp/`, logs, bancos locais e artefatos de teste para GitHub/npm.
+### Validação
+- `git ls-files` confirmou ausência de memórias/artefatos locais rastreados; `npm pack --dry-run --json --ignore-scripts` não incluiu arquivos proibidos.
+
 ## [v04.00.10] - 2026-04-17
 ### Corrigido
 - `wrangler.json` deixou de declarar `observability` por ser config de Cloudflare Pages; os logs do GitHub Actions confirmaram a incompatibilidade com `wrangler 4.83.0`.
