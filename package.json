@@ -1,8 +1,21 @@
 {
   "name": "apphub",
-  "private": true,
-  "version": "4.0.7",
+  "version": "4.0.10",
+  "description": "Cloudflare Pages portal hub. Static landing + PWA dispatcher routing visitors to a configurable set of sub-applications via a card-grid UI, backed by Cloudflare D1.",
+  "license": "AGPL-3.0-or-later",
+  "author": "Leonardo Cardozo Vargas (lcv-leo)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcv-leo/apphub.git"
+  },
+  "homepage": "https://github.com/lcv-leo/apphub#readme",
+  "bugs": {
+    "url": "https://github.com/lcv-leo/apphub/issues"
+  },
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
